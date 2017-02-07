@@ -10,9 +10,7 @@ Example:
 
 Example:
 
-    <location-picker>
-      <h2>Hello location-picker</h2>
-    </location-picker>
+    <location-picker api-key="YOUR_API_KEY"></location-picker>
 
 @demo demo/index.html
 @hero hero.svg
@@ -34,8 +32,7 @@ Example:
         </style>
 
         <google-map id="map" latitude="{{ latitude }}" longitude="{{ longitude }}" api-key="{{apiKey}}" click-events
-                    drag-events on-google-map-click="clickHandler" on-google-map-zoom="zoomHandler"
-                    disable-street-view-control>
+                    drag-events on-google-map-click="_clickHandler" disable-street-view-control>
             <google-map-marker id="marker" latitude="{{ latitude }}" longitude="{{ longitude }}" draggable="true"
                                title="Selected location"></google-map-marker>
         </google-map>
@@ -81,28 +78,28 @@ Example:
                 this.map.addEventListener('google-map-ready', function (e) {
                     console.log('Map loaded!');
                     google.maps.event.addListener(that.map, 'zoom_changed', function () {
-                        that.updateRadius();
+                        that._updateRadius();
                     });
                     google.maps.event.addListener(that.map, 'tilesloaded', function () {
-                        that.updateRadius();
+                        that._updateRadius();
                     });
                 });
             },
 
             // Element Behavior
 
-            clickHandler: function (e, c) {
+            _clickHandler: function (e, c) {
                 this.marker.latitude = c.latLng.lat();
                 this.marker.longitude = c.latLng.lng()
             },
 
-            updateRadius: function (e, c) {
+            _updateRadius: function (e, c) {
                 var bounds = this.map.map.getBounds();
                 var ne = bounds.getNorthEast(), sw = bounds.getSouthWest();
-                return this.radius = this.distance(ne.lat(), ne.lng(), sw.lat(), sw.lng(), 'K');
+                return this.radius = this._distance(ne.lat(), ne.lng(), sw.lat(), sw.lng(), 'K');
             },
 
-            distance: function (lat1, lon1, lat2, lon2, unit) {
+            _distance: function (lat1, lon1, lat2, lon2, unit) {
                 var radlat1 = Math.PI * lat1 / 180;
                 var radlat2 = Math.PI * lat2 / 180;
                 var theta = lon1 - lon2;
