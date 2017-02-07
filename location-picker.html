@@ -31,8 +31,7 @@ Example:
             }
         </style>
 
-        <google-map id="map" latitude="{{ latitude }}" longitude="{{ longitude }}" api-key="{{apiKey}}" click-events
-                    drag-events on-google-map-click="_clickHandler" disable-street-view-control>
+        <google-map id="map" latitude="{{ latitude }}" longitude="{{ longitude }}" api-key="{{apiKey}}" disable-street-view-control>
             <google-map-marker id="marker" latitude="{{ latitude }}" longitude="{{ longitude }}" draggable="true"
                                title="Selected location"></google-map-marker>
         </google-map>
@@ -67,56 +66,7 @@ Example:
                     type: Number,
                     notify: true
                 }
-            },
-
-            // Element Lifecycle
-
-            ready: function () {
-                var that = this;
-                this.map = this.$.map;
-                this.marker = this.$.marker;
-                this.map.addEventListener('google-map-ready', function (e) {
-                    console.log('Map loaded!');
-                    google.maps.event.addListener(that.map, 'zoom_changed', function () {
-                        that._updateRadius();
-                    });
-                    google.maps.event.addListener(that.map, 'tilesloaded', function () {
-                        that._updateRadius();
-                    });
-                });
-            },
-
-            // Element Behavior
-
-            _clickHandler: function (e, c) {
-                this.marker.latitude = c.latLng.lat();
-                this.marker.longitude = c.latLng.lng()
-            },
-
-            _updateRadius: function (e, c) {
-                var bounds = this.map.map.getBounds();
-                var ne = bounds.getNorthEast(), sw = bounds.getSouthWest();
-                return this.radius = this._distance(ne.lat(), ne.lng(), sw.lat(), sw.lng(), 'K');
-            },
-
-            _distance: function (lat1, lon1, lat2, lon2, unit) {
-                var radlat1 = Math.PI * lat1 / 180;
-                var radlat2 = Math.PI * lat2 / 180;
-                var theta = lon1 - lon2;
-                var radtheta = Math.PI * theta / 180;
-                var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-                dist = Math.acos(dist);
-                dist = dist * 180 / Math.PI;
-                dist = dist * 60 * 1.1515;
-                if (unit == "K") {
-                    dist = dist * 1.609344
-                }
-                if (unit == "N") {
-                    dist = dist * 0.8684
-                }
-                return dist;
             }
-
         });
     </script>
 </dom-module>
