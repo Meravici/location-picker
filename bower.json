@@ -4,7 +4,8 @@
   "description": "A web component to allow users to pick a location from a map. ",
   "main": "location-picker.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.4.0"
+    "polymer": "Polymer/polymer#^1.4.0",
+    "google-map": "GoogleWebComponents/google-map#^1.2.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
