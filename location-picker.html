@@ -21,11 +21,12 @@ Example:
         <style>
             :host {
                 display: block;
-                box-sizing: border-box;
             }
 
             google-map {
                 display: block;
+                min-height: 150px;
+                min-width: 150px;
                 width: 100%;
                 height: 100%;
             }
@@ -33,14 +34,14 @@ Example:
 
         <template is="dom-if" if="[[!disabled]]">
             <google-map id="map" latitude="{{ latitude }}" longitude="{{ longitude }}" api-key="{{apiKey}}"
-                        disable-street-view-control>
+                        disable-default-ui>
                 <google-map-marker id="marker" latitude="[[ latitude ]]" longitude="[[ longitude ]]" draggable="true"
                                    title="Selected location"></google-map-marker>
             </google-map>
         </template>
         <template is="dom-if" if="[[disabled]]">
             <google-map id="disabled-map" latitude="[[ latitude ]]" longitude="[[ longitude ]]" api-key="[[ apiKey ]]"
-                        disable-default-ui zoom="13">
+                        disable-default-ui>
                 <google-map-marker latitude="[[ latitude ]]" longitude="[[ longitude ]]"></google-map-marker>
             </google-map>
         </template>
@@ -66,13 +67,6 @@ Example:
                     type: Number,
                     notify: true,
                     value: 0
-                },
-                /**
-                 * radius of selected place
-                 */
-                radius: {
-                    type: Number,
-                    notify: true
                 },
 
                 disabled: {
