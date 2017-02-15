@@ -57,21 +57,37 @@ Example:
                  */
                 latitude: {
                     type: Number,
-                    notify: true,
-                    value: 0
+                    notify: true
                 },
                 /**
                  * longitude of selected place
                  */
                 longitude: {
                     type: Number,
-                    notify: true,
-                    value: 0
+                    notify: true
                 },
 
                 disabled: {
                     type: Boolean,
                     value: false
+                }
+            },
+
+            ready: function () {
+                console.log(this.latitude);
+                console.log(this.longitude);
+                if (!this.latitude || !this.longitude) {
+                    this.set('latitude', 0);
+                    this.set('longitude', 0);
+
+                    if (navigator.geolocation) {
+                        var that = this;
+                        navigator.geolocation.getCurrentPosition(function(position){
+                            that.set('latitude', position.coords.latitude);
+                            that.set('longitude', position.coords.longitude);
+                        });
+                    } else {
+                    }
                 }
             }
         });
