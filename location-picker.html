@@ -31,11 +31,19 @@ Example:
             }
         </style>
 
-        <google-map id="map" latitude="{{ latitude }}" longitude="{{ longitude }}" api-key="{{apiKey}}" disable-street-view-control>
-            <google-map-marker id="marker" latitude="{{ latitude }}" longitude="{{ longitude }}" draggable="true"
-                               title="Selected location"></google-map-marker>
-        </google-map>
-        <content></content>
+        <template is="dom-if" if="[[!disabled]]">
+            <google-map id="map" latitude="{{ latitude }}" longitude="{{ longitude }}" api-key="{{apiKey}}"
+                        disable-street-view-control>
+                <google-map-marker id="marker" latitude="[[ latitude ]]" longitude="[[ longitude ]]" draggable="true"
+                                   title="Selected location"></google-map-marker>
+            </google-map>
+        </template>
+        <template is="dom-if" if="[[disabled]]">
+            <google-map id="disabled-map" latitude="[[ latitude ]]" longitude="[[ longitude ]]" api-key="[[ apiKey ]]"
+                        disable-default-ui zoom="13">
+                <google-map-marker latitude="[[ latitude ]]" longitude="[[ longitude ]]"></google-map-marker>
+            </google-map>
+        </template>
     </template>
 
     <script>
@@ -65,6 +73,11 @@ Example:
                 radius: {
                     type: Number,
                     notify: true
+                },
+
+                disabled: {
+                    type: Boolean,
+                    value: false
                 }
             }
         });
