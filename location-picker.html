@@ -74,8 +74,6 @@ Example:
             },
 
             ready: function () {
-                console.log(this.latitude);
-                console.log(this.longitude);
                 if (!this.latitude || !this.longitude) {
                     this.set('latitude', 0);
                     this.set('longitude', 0);
@@ -85,6 +83,8 @@ Example:
                         navigator.geolocation.getCurrentPosition(function(position){
                             that.set('latitude', position.coords.latitude);
                             that.set('longitude', position.coords.longitude);
+                        }, function(error){
+                            console.log(error);
                         });
                     } else {
                     }
