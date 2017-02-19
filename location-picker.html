@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../google-map/google-map.html">
+<link rel="import" href="../google-map/google-map-marker.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -31,16 +32,15 @@ Example:
                 height: 100%;
             }
         </style>
-
         <template is="dom-if" if="[[!disabled]]">
-            <google-map id="map" latitude="{{ latitude }}" longitude="{{ longitude }}" api-key="{{apiKey}}"
+            <google-map id="map" latitude="{{ latitude }}" longitude="{{ longitude }}" api-key="{{apiKey}}" zoom="{{zoom}}"
                         disable-default-ui>
                 <google-map-marker id="marker" latitude="[[ latitude ]]" longitude="[[ longitude ]]" draggable="true"
                                    title="Selected location"></google-map-marker>
             </google-map>
         </template>
         <template is="dom-if" if="[[disabled]]">
-            <google-map id="disabled-map" latitude="[[ latitude ]]" longitude="[[ longitude ]]" api-key="[[ apiKey ]]"
+            <google-map id="disabled-map" latitude="[[ latitude ]]" longitude="[[ longitude ]]" api-key="[[ apiKey ]]" zoom="{{zoom}}"
                         disable-default-ui>
                 <google-map-marker latitude="[[ latitude ]]" longitude="[[ longitude ]]"></google-map-marker>
             </google-map>
@@ -67,6 +67,12 @@ Example:
                     notify: true
                 },
 
+                zoom: {
+                    type: Number,
+                    value: 10,
+                    notify: true
+                },
+
                 disabled: {
                     type: Boolean,
                     value: false
@@ -84,7 +90,7 @@ Example:
                             that.set('latitude', position.coords.latitude);
                             that.set('longitude', position.coords.longitude);
                         }, function(error){
-                            console.log(error);
+                            console.error(error);
                         });
                     } else {
                     }
