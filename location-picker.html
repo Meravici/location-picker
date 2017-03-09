@@ -33,7 +33,7 @@ Example:
             }
         </style>
         <template is="dom-if" if="[[!disabled]]">
-            <google-map id="map" latitude="{{ latitude }}" longitude="{{ longitude }}" api-key="{{apiKey}}" zoom="{{zoom}}"
+            <google-map id="map" latitude="{{ latitude }}" longitude="{{ longitude }}" api-key="[[apiKey]]" zoom="{{zoom}}"
                         disable-default-ui>
                 <google-map-marker id="marker" latitude="[[ latitude ]]" longitude="[[ longitude ]]" draggable="true"
                                    title="Selected location"></google-map-marker>
@@ -76,7 +76,9 @@ Example:
                 disabled: {
                     type: Boolean,
                     value: false
-                }
+                },
+
+                apiKey: String
             },
 
             ready: function () {
